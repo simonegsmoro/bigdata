@@ -56,5 +56,4 @@ m <- leaflet(data = bcn) %>% addTiles() %>%
     position = 'bottomleft',
     exportOnly = TRUE))
     
-    
 saveWidget(m, file="transports.html")
