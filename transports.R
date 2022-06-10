@@ -9,24 +9,38 @@ bcn <- read.csv(file = 'TRANSPORTS.csv')
 
 newcol <- c()
 for(i in 1:dim(bcn)[1]){
-  if(grepl('METRO ', bcn$EQUIPAMENT[i], fixed = TRUE)){
-    newcol <- c(newcol,'METRO')
+  if(grepl('Estació marítima', bcn$NOM_CAPA[i], fixed = TRUE)){
+    newcol <- c(newcol,'Estació marítima')
   }
-  else if(grepl('RENFE ', bcn$EQUIPAMENT[i], fixed = TRUE)){
+  else if(grepl('Ferrocarrils Generalitat (FGC)', bcn$NOM_CAPA[i], fixed = TRUE)){
+    newcol <- c(newcol,'Ferrocarrils Generalitat (FGC)')
+  }
+  else if(grepl('Funicular', bcn$NOM_CAPA[i], fixed = TRUE)){
+    newcol <- c(newcol,'Funicular')
+  }
+  else if(grepl('Metro i línies urbanes FGC', bcn$NOM_CAPA[i], fixed = TRUE)){
+    newcol <- c(newcol,'Metro i línies urbanes FGC')
+  }
+  else if(grepl('RENFE', bcn$NOM_CAPA[i], fixed = TRUE)){
     newcol <- c(newcol,'RENFE')
   }
-  else if(grepl('TRAMVIA ', bcn$EQUIPAMENT[i], fixed = TRUE)){
-    newcol <- c(newcol,'TRAMVIA')
+  else if(grepl('Telefèric', bcn$NOM_CAPA[i], fixed = TRUE)){
+    newcol <- c(newcol,'Telefèric')
   }
-  else if(grepl('FGC ', bcn$EQUIPAMENT[i], fixed = TRUE)){
-    newcol <- c(newcol,'FGC')
+  else if(grepl('Tramvia', bcn$NOM_CAPA[i], fixed = TRUE)){
+    newcol <- c(newcol,'Tramvia')
   }
-  else{
-    newcol <- c(newcol,'Other')
+  else if(grepl("Tren a l'aeroport", bcn$NOM_CAPA[i], fixed = TRUE)){
+    newcol <- c(newcol,"Tren a l'aeroport")
   }
 }
 
 bcn$transporte <- newcol
+    
+pal <- colorFactor(
+  palette = c('red', 'blue', 'black', 'orange','green','purple','yellow','hotpink'),
+  domain = bcn$transporte
+)
 
 m <- leaflet(data = bcn) %>% addTiles() %>% 
   addCircleMarkers(~LONGITUD, ~LATITUD, 
